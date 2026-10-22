@@ -1,38 +1,30 @@
-name: Build Android Release APK
+import 'package:flutter/material.dart';
 
-on:
-  push:
-    branches: [ main, master ]
-  workflow_dispatch:
+void main() {
+  runApp(const MyApp());
+}
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Java JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-
-      - name: Setup Flutter SDK
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.19.x'
-          channel: 'stable'
-
-      - name: Install Dependencies
-        run: flutter pub get
-
-      - name: Build APK
-        run: flutter build apk --release --no-tree-shake-icons
-
-      - name: Upload Release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'PlayTube',
+      theme: ThemeData.dark(),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('PlayTube App'),
+          backgroundColor: Colors.red,
+        ),
+        body: const Center(
+          child: Text(
+            'Welcome to PlayTube Shorts & Movies!',
+            style: TextStyle(fontSize: 18, color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+}
